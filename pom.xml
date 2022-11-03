@@ -9,8 +9,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>org.sadtech.example</groupId>
-    <artifactId>swagger</artifactId>
+    <groupId>my.warehouse</groupId>
+    <artifactId>MyWarehouse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>MyWarehouse</name>
@@ -67,15 +67,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.196</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.12.0</version>
         </dependency>
 
         <dependency>

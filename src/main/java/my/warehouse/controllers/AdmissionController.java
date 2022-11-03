@@ -37,7 +37,7 @@ public class AdmissionController {
         if (!error.isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.stream().map(Object::toString).collect(Collectors.joining("\n")));
 
-            try {
+        try {
             admissionService.admission(admissionDTO);
             return ResponseEntity.ok(admissionService.products(admissionDTO.getWarehouse()));
         } catch (DataNotFoundException dataNotFoundException) {
