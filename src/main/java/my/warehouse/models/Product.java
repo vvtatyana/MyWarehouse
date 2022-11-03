@@ -1,27 +1,39 @@
 package my.warehouse.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Warehouse id must not be empty")
     @Column(name = "warehouse")
     private long idWarehouse;
 
+    @NotNull(message = "Артикул должен быть заполнено")
+    @NotEmpty(message = "Артикул должен быть заполнен")
     @Column(name = "article")
     private String article;
 
+    @NotNull(message = "Название товара должно быть заполнено")
+    @NotEmpty(message = "Название товара должно быть заполнено")
     @Column(name = "name")
     private String name;
 
+    @NotNull(message = "Цена последней закупки должна быть заполнена")
+    @NotEmpty(message = "Цена последней закупки должна быть заполнена")
     @Column(name = "priceLastPurchase")
     private String priceLastPurchase;
 
+    @NotNull(message = "Цена последней продажи должна быть заполнена")
+    @NotEmpty(message = "Цена последней продажи должена быть не пустой")
     @Column(name = "priceLastSale")
     private String priceLastSale;
 
@@ -86,8 +98,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return article + ", " + name + ", " + priceLastPurchase + ", " + priceLastSale;
+        return "article : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
     }
-
-
 }

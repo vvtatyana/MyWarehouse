@@ -1,9 +1,24 @@
 package my.warehouse.dto;
 
-public class ProductDTO {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+public class ProductDTO implements IDTO {
+    @NotNull(message = "Артикул должен быть заполнено")
+    @NotEmpty(message = "Артикул должен быть заполнен")
     private String article;
+
+
+    @NotNull(message = "Название товара должно быть заполнено")
+    @NotEmpty(message = "Название товара должно быть заполнено")
     private String name;
+
+    @NotNull(message = "Цена последней закупки должна быть заполнена")
+    @NotEmpty(message = "Цена последней закупки должна быть заполнена")
     private String priceLastPurchase;
+
+    @NotNull(message = "Цена последней продажи должна быть заполнена")
+    @NotEmpty(message = "Цена последней продажи должена быть не пустой")
     private String priceLastSale;
 
     public ProductDTO() {
@@ -46,5 +61,10 @@ public class ProductDTO {
 
     public void setPriceLastSale(String priceLastSale) {
         this.priceLastSale = priceLastSale;
+    }
+
+    @Override
+    public String toString() {
+        return "article : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
     }
 }

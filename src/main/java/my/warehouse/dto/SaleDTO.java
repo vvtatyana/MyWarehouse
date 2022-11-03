@@ -1,10 +1,23 @@
 package my.warehouse.dto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SaleDTO {
+public class SaleDTO implements IDTO {
+    @NotNull(message = "Номер документа должен быть заполнен")
+    @NotEmpty(message = "Номер документа должен быть не пустым")
     String number;
+
+    @NotNull(message = "Данные о складе должены быть заполнены")
+    @Valid
     WarehouseDTO warehouse;
+
+    @NotNull(message = "Данные о товарах должены быть заполнены")
+    @NotEmpty(message = "Данные о товарах должены быть не пустыми")
+    @Valid
     List<ProductDTO> products;
 
     public SaleDTO() {
@@ -38,5 +51,10 @@ public class SaleDTO {
 
     public void setProducts(List<ProductDTO> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "number : " + number + "\nwarehouse : " + warehouse + "\nproducts : " + products.stream().map(Object::toString).collect(Collectors.joining("\n"));
     }
 }

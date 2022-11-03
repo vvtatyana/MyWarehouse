@@ -1,4 +1,4 @@
-CREATE TABLE product
+CREATE TABLE IF NOT EXISTS product
 (
     id         BIGSERIAL NOT NULL,
     warehouse  BIGINT NOT NULL,
