@@ -11,17 +11,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AdmissionControllerTest {
-
+public class MovingControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Test
     public void testReturn200() throws Exception {
-        String json = getJSON("Склад 1");
+        String json = getJSON("Холодильник");
 
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/moving")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -31,10 +30,10 @@ public class AdmissionControllerTest {
 
     @Test
     public void testReturn404() throws Exception {
-        String json = getJSON("Склад 100");
+        String json = getJSON("Утюг");
 
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/moving")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -46,7 +45,7 @@ public class AdmissionControllerTest {
     public void testReturn400() throws Exception {
         String json = getJSON("");
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/moving")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -54,16 +53,19 @@ public class AdmissionControllerTest {
 
     }
 
-    private String getJSON(String warehouse){
+    private String getJSON(String nameProduct){
         return "\t{\n" +
                 "  \"number\": \"1\",\n" +
-                "  \"warehouse\": {\n" +
-                "    \"name\": \"" + warehouse + "\"\n" +
+                "  \"warehouseOne\": {\n" +
+                "    \"name\": \"Склад 1\"\n" +
+                "  },\n" +
+                "  \"warehouseTwo\": {\n" +
+                "    \"name\": \"Склад 2\"\n" +
                 "  },\n" +
                 "  \"products\": [\n" +
                 "  {\n" +
                 "    \"article\": \"7A1FCTG44\",\n" +
-                "    \"name\": \"Холодильник\",\n" +
+                "    \"name\": \"" + nameProduct + "\",\n" +
                 "    \"priceLastPurchase\": \"50000\",\n" +
                 "    \"priceLastSale\": \"50000\"\n" +
                 "    }\n" +

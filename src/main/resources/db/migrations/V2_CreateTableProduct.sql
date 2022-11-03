@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS product
     warehouse  BIGINT NOT NULL,
     article    VARCHAR(255) NOT NULL,
     name       VARCHAR(255) NOT NULL,
-    priceLastPurchase VARCHAR(255) NOT NULL,
-    priceLastSale VARCHAR(255) NOT NULL,
+    price_last_purchase VARCHAR(255) NOT NULL,
+    price_last_sale VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 

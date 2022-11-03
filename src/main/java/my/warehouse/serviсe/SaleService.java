@@ -4,7 +4,6 @@ import my.warehouse.dao.ProductDAO;
 import my.warehouse.dao.WarehouseDAO;
 import my.warehouse.dto.ProductDTO;
 import my.warehouse.dto.SaleDTO;
-import my.warehouse.dto.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
 import my.warehouse.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;

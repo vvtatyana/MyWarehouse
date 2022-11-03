@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AdmissionControllerTest {
+public class SaleControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -21,7 +21,7 @@ public class AdmissionControllerTest {
         String json = getJSON("Склад 1");
 
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/sale")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -34,7 +34,7 @@ public class AdmissionControllerTest {
         String json = getJSON("Склад 100");
 
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/sale")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -46,7 +46,7 @@ public class AdmissionControllerTest {
     public void testReturn400() throws Exception {
         String json = getJSON("");
         mvc.perform(
-                        put("/api/admission")
+                        put("/api/sale")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )

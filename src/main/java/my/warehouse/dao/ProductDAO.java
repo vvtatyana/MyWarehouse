@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -24,8 +23,7 @@ public class ProductDAO extends AbstractDAO<Product> {
 
     public long getId(Product product) throws DataNotFoundException {
         Session session = sessionFactory.getCurrentSession();
-        try {
-            return session.createQuery("select p.id from Product p where idWarehouse =: warehouseV " +
+        List<Long> result = session.createQuery("select p.id from Product p where idWarehouse =: warehouseV " +
                             "and article =: articleV " +
                             "and name =: nameV " +
                             "and priceLastPurchase =: priceLastPurchaseV " +
@@ -35,10 +33,10 @@ public class ProductDAO extends AbstractDAO<Product> {
                     .setParameter("nameV", product.getName())
                     .setParameter("priceLastPurchaseV", product.getPriceLastPurchase())
                     .setParameter("priceLastSale", product.getPriceLastSale())
-                    .getSingleResult();
-        } catch (NoResultException ex){
-            throw new DataNotFoundException("There is no product data with data in the database :\n" + product.toString());
-        }
+                    .getResultList();
+        if (result.isEmpty())
+            throw new DataNotFoundException("There is no product data with data in the database :\n" + product);
+        return result.get(0);
     }
 
     public void update(long id, Product newProduct) throws DataNotFoundException {

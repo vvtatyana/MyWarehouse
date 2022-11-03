@@ -22,7 +22,6 @@ public class AdmissionService extends AbstractService{
 
     public void admission(AdmissionDTO admissionDTO) throws DataNotFoundException {
         WarehouseDTO warehouseDTO = admissionDTO.getWarehouse();
-
         long idWarehouse = warehouseDAO.getId(warehouseDTO);
 
         List<ProductDTO> products = admissionDTO.getProducts();

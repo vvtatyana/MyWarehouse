@@ -19,18 +19,13 @@ public class Validate {
         this.validator = validator;
     }
 
-    public List<String> validate(IDTO dto){
+    public List<String> validate(IDTO dto) {
         List<String> errors = new ArrayList<>();
         Set<ConstraintViolation<IDTO>> cvs = validator.validate(dto);
 
         if (!cvs.isEmpty()) {
-
             for (ConstraintViolation<IDTO> cv : cvs) {
-                StringBuilder err = new StringBuilder();
-                err.append(cv.getPropertyPath());
-                err.append(" ");
-                err.append(cv.getMessage());
-                errors.add(err.toString());
+                errors.add(cv.getPropertyPath() + " " + cv.getMessage());
             }
         }
 

@@ -5,16 +5,16 @@ import javax.validation.constraints.NotNull;
 
 public class ProductDTO implements IDTO {
     @NotNull(message = "Артикул должен быть заполнено")
-    @NotEmpty(message = "Артикул должен быть заполнен")
+    @NotEmpty(message = "Артикул должен быть не пустой")
     private String article;
 
 
     @NotNull(message = "Название товара должно быть заполнено")
-    @NotEmpty(message = "Название товара должно быть заполнено")
+    @NotEmpty(message = "Название товара должно быть не пустым")
     private String name;
 
     @NotNull(message = "Цена последней закупки должна быть заполнена")
-    @NotEmpty(message = "Цена последней закупки должна быть заполнена")
+    @NotEmpty(message = "Цена последней закупки должна быть не пустая")
     private String priceLastPurchase;
 
     @NotNull(message = "Цена последней продажи должна быть заполнена")

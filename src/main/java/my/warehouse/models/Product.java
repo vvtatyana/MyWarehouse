@@ -13,28 +13,27 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Warehouse id must not be empty")
     @Column(name = "warehouse")
     private long idWarehouse;
 
     @NotNull(message = "Артикул должен быть заполнено")
-    @NotEmpty(message = "Артикул должен быть заполнен")
+    @NotEmpty(message = "Артикул должен быть не пустой")
     @Column(name = "article")
     private String article;
 
     @NotNull(message = "Название товара должно быть заполнено")
-    @NotEmpty(message = "Название товара должно быть заполнено")
+    @NotEmpty(message = "Название товара должно быть не пустым")
     @Column(name = "name")
     private String name;
 
     @NotNull(message = "Цена последней закупки должна быть заполнена")
-    @NotEmpty(message = "Цена последней закупки должна быть заполнена")
-    @Column(name = "priceLastPurchase")
+    @NotEmpty(message = "Цена последней закупки должна быть не пустой")
+    @Column(name = "price_last_purchase")
     private String priceLastPurchase;
 
     @NotNull(message = "Цена последней продажи должна быть заполнена")
     @NotEmpty(message = "Цена последней продажи должена быть не пустой")
-    @Column(name = "priceLastSale")
+    @Column(name = "price_last_sale")
     private String priceLastSale;
 
     public Product() {
@@ -98,6 +97,6 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "article : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
+        return "warehouse : " + idWarehouse + "\narticle : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
     }
 }
