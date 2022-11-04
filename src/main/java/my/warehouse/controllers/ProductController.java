@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import my.warehouse.dto.product.FullProductDTO;
 import my.warehouse.dto.product.ProductDTO;
-import my.warehouse.dto.product.UpdateProductDTO;
 import my.warehouse.exceptions.DataNotFoundException;
+import my.warehouse.models.Product;
 import my.warehouse.serviсe.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,19 +33,18 @@ public class ProductController {
     @PostMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity add (@RequestBody @Valid FullProductDTO newProductDTO) {
         try {
-            productService.add(newProductDTO);
-            return ResponseEntity.ok().body("Данные о новом товаре успешно сохранены");
+            Product product = productService.add(newProductDTO);
+            return ResponseEntity.ok().body(product);
         } catch (DataNotFoundException dataNotFoundException) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dataNotFoundException.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Не удалось сохранить данные товара");
         }
     }
 
     @Operation(summary = "Изменение данных о товаре")
-    @PutMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody @Valid UpdateProductDTO updateProductDTO) {
-
+    @PutMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid FullProductDTO updateProductDTO) {
         try {
-            productService.update(updateProductDTO);
+            productService.update(id, updateProductDTO);
             return ResponseEntity.ok().body("Данные о товаре успешно изменены");
         } catch (DataNotFoundException dataNotFoundException) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dataNotFoundException.getMessage());
@@ -53,10 +52,10 @@ public class ProductController {
     }
 
     @Operation(summary = "Удаление данных о товаре")
-    @DeleteMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity delete(@RequestBody @Valid FullProductDTO newProductDTO) {
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
         try {
-            productService.delete(newProductDTO);
+            productService.delete(id);
             return ResponseEntity.ok().body("Данные о товаре успешно удалены");
         } catch (DataNotFoundException dataNotFoundException) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dataNotFoundException.getMessage());
@@ -64,11 +63,13 @@ public class ProductController {
     }
 
     @Operation(summary = "Просмотр данных о товаре")
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity get(@RequestBody(required = false) String nameProduct) {
-        List<ProductDTO> productDTO;
-        if (nameProduct == null) productDTO = productService.getAll();
-        else productDTO = productService.get(nameProduct);
-        return ResponseEntity.ok().body(productDTO);
+    @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity get(@PathVariable Long id) {
+        try {
+            ProductDTO productDTO = productService.get(id);
+            return ResponseEntity.ok().body(productDTO);
+        } catch (DataNotFoundException dataNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dataNotFoundException.getMessage());
+        }
     }
 }

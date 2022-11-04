@@ -1,6 +1,8 @@
 package my.warehouse.controllers;
 
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,68 +14,46 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WarehouseControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    private static long id;
     @Test
-    public void testPost() throws Exception {
+    public void test1Post() throws Exception {
         String JSON = "{\n" +
                 "  \"name\": \"Склад 5\"\n" +
                 "}";
 
-        mvc.perform(post("/api/warehouse")
+        String body = mvc.perform(post("/api/warehouse")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSON)
-        ).andExpect(status().isOk());
+        ).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        int start = body.indexOf("id") + 4;
+        int end = body.indexOf("name") - 2;
+        id = Long.parseLong(body.substring(start, end));
     }
 
     @Test
-    public void testPut() throws Exception {
+    public void test2Put() throws Exception {
         String JSON = "{\n" +
-                "  \"warehouseDTO\": {\n" +
-                "    \"name\": \"Склад 5\"\n" +
-                "  },\n" +
-                "  \"newWarehouseDTO\": {\n" +
-                "    \"name\": \"Склад 6\"\n" +
-                "  }\n" +
+                "  \"name\": \"Склад 6\"\n" +
                 "}";
 
-        mvc.perform(put("/api/warehouse")
+        mvc.perform(put("/api/warehouse/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSON)
         ).andExpect(status().isOk());
     }
 
     @Test
-    public void testDelete() throws Exception {
-        String JSON = "{\n" +
-                "  \"name\": \"Склад 10\"\n" +
-                "}";
-        mvc.perform(post("/api/warehouse")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JSON)
-        ).andExpect(status().isOk());
-
-        mvc.perform(delete("/api/warehouse")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JSON)
-        ).andExpect(status().isOk());
+    public void test3Get() throws Exception {
+        mvc.perform(get("/api/warehouse/" + id)).andExpect(status().isOk());
     }
 
     @Test
-    public void testGet() throws Exception {
-        mvc.perform(get("/api/warehouse")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("Склад 1")
-        ).andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetEmpty() throws Exception {
-        mvc.perform(get("/api/warehouse")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("")
-        ).andExpect(status().isOk());
+    public void test4Delete() throws Exception {
+        mvc.perform(delete("/api/warehouse/" + id)).andExpect(status().isOk());
     }
 }

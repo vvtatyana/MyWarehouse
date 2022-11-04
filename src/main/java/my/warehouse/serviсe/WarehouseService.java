@@ -1,7 +1,7 @@
 package my.warehouse.serviсe;
 
+import liquibase.pro.packaged.W;
 import my.warehouse.dao.WarehouseDAO;
-import my.warehouse.dto.warehouse.UpdateWarehouseDTO;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
 import my.warehouse.models.Warehouse;
@@ -20,25 +20,20 @@ public class WarehouseService {
         this.warehouseDAO = warehouseDAO;
     }
 
-    public void add(WarehouseDTO warehouseDTO){
-        warehouseDAO.insert(new Warehouse(warehouseDTO));
+    public Warehouse add(WarehouseDTO warehouseDTO) throws DataNotFoundException {
+        long id = warehouseDAO.insert(new Warehouse(warehouseDTO));
+        return warehouseDAO.select(id);
     }
 
-    public void update(UpdateWarehouseDTO updateWarehouseDTO) throws DataNotFoundException {
-        long id = warehouseDAO.getId(updateWarehouseDTO.getWarehouseDTO());
-        warehouseDAO.update(id, updateWarehouseDTO.getNewWarehouseDTO());
+    public void update(long id, WarehouseDTO updateWarehouseDTO) throws DataNotFoundException {
+        warehouseDAO.update(id, updateWarehouseDTO);
     }
 
-    public void delete(WarehouseDTO warehouseDTO) throws DataNotFoundException {
-        warehouseDAO.delete(warehouseDAO.getId(warehouseDTO));
+    public void delete(long id) throws DataNotFoundException {
+        warehouseDAO.delete(id);
     }
 
-    public List<WarehouseDTO> get(String name) {
-        return warehouseDAO.select(name).stream().map(WarehouseDTO::new).toList();
-
-    }
-
-    public List<WarehouseDTO> getAll() {
-        return warehouseDAO.select().stream().map(WarehouseDTO::new).toList();
+    public WarehouseDTO get(long id) throws DataNotFoundException {
+        return new WarehouseDTO(warehouseDAO.select(id));
     }
 }

@@ -19,33 +19,22 @@ public class ReportsControllerTest {
 
     @Test
     public void testGeneralListProducts() throws Exception {
-        mvc.perform(get("/api/report/generalListProducts")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("Холодильник")
+        mvc.perform(get("/api/report/generalListProducts/Холодильник")
         ).andExpect(status().isOk());
     }
 
     @Test
     public void testGeneralListProductsEmpty() throws Exception {
-        mvc.perform(get("/api/report/generalListProducts")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("")
-        ).andExpect(status().isOk());
+        mvc.perform(get("/api/report/generalListProducts")).andExpect(status().isOk());
     }
 
     @Test
     public void testRemnantsGoodsInWarehouses() throws Exception {
-        mvc.perform(get("/api/report/remnantsGoodsInWarehouses")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("Склад 1")
-        ).andExpect(status().isOk());
+        mvc.perform(get("/api/report/remnantsGoodsInWarehouses/Склад 1")).andExpect(status().isOk());
     }
 
     @Test
     public void testRemnantsGoodsInWarehousesEmpty() throws Exception {
-        mvc.perform(get("/api/report/remnantsGoodsInWarehouses")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("")
-        ).andExpect(status().isOk());
+        mvc.perform(get("/api/report/remnantsGoodsInWarehouses")).andExpect(status().isOk());
     }
 }

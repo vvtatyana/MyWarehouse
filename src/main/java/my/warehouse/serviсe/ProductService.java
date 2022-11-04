@@ -4,7 +4,6 @@ import my.warehouse.dao.ProductDAO;
 import my.warehouse.dao.WarehouseDAO;
 import my.warehouse.dto.product.FullProductDTO;
 import my.warehouse.dto.product.ProductDTO;
-import my.warehouse.dto.product.UpdateProductDTO;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
 import my.warehouse.models.Product;
@@ -25,29 +24,23 @@ public class ProductService {
         this.warehouseDAO = warehouseDAO;
     }
 
-    public void add(FullProductDTO newProductDTO) throws DataNotFoundException {
+    public Product add(FullProductDTO newProductDTO) throws DataNotFoundException {
         long idWarehouse = warehouseDAO.getId(new WarehouseDTO(newProductDTO.getNameWarehouse()));
-        productDAO.insert(new Product(idWarehouse, newProductDTO.getProductDTO()));
+        long id = productDAO.insert(new Product(idWarehouse, newProductDTO.getProductDTO()));
+        return productDAO.select(id);
     }
 
-    public void update(UpdateProductDTO updateProductDTO) throws DataNotFoundException {
+    public void update(long id, FullProductDTO updateProductDTO) throws DataNotFoundException {
         long idWarehouse = warehouseDAO.getId(new WarehouseDTO(updateProductDTO.getNameWarehouse()));
-        long idProduct = productDAO.getId(new Product(idWarehouse, updateProductDTO.getProductDTO()));
-        productDAO.update(idProduct, new Product(idWarehouse, updateProductDTO.getNewProductDTO()));
+        productDAO.update(id, new Product(idWarehouse, updateProductDTO.getProductDTO()));
     }
 
-    public void delete(FullProductDTO newProductDTO) throws DataNotFoundException {
-        long idWarehouse = warehouseDAO.getId(new WarehouseDTO(newProductDTO.getNameWarehouse()));
-        long idProduct = productDAO.getId(new Product(idWarehouse, newProductDTO.getProductDTO()));
-        productDAO.delete(idProduct);
+    public void delete(long id) throws DataNotFoundException {
+        productDAO.delete(id);
     }
 
-    public List<ProductDTO> get(String name) {
-        return productDAO.select(name).stream().map(ProductDTO::new).toList();
+    public ProductDTO get(long id) throws DataNotFoundException {
+        return new ProductDTO(productDAO.select(id));
 
-    }
-
-    public List<ProductDTO> getAll() {
-        return productDAO.select().stream().map(ProductDTO::new).toList();
     }
 }

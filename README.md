@@ -97,7 +97,7 @@ http://localhost:8080/swagger-ui.html
 </tr>
 <tr>
 <td rowspan="4"> Склад </td>
-<td> Добавление нового склада </td>
+<td> Добавление данных нового склада </td>
 <td> POST </td>
 <td> /api/warehouse </td>
 <td>
@@ -110,27 +110,9 @@ http://localhost:8080/swagger-ui.html
 </td>
 </tr>
 <tr>
-<td> Изменение данных о складе </td>
+<td> Изменение данных склада </td>
 <td> PUT </td>
-<td> /api/warehouse </td>
-<td>
-
-```json
-{
-  "warehouseDTO": {
-    "name": "Склад 1"
-  },
-  "newWarehouseDTO": {
-    "name": "Склад 2"
-  }
-}
-```
-</td>
-</tr>
-<tr>
-<td> Удаление склада </td>
-<td> DELETE </td>
-<td> /api/warehouse </td>
+<td> /api/warehouse/{id} </td>
 <td>
 
 ```json
@@ -141,11 +123,17 @@ http://localhost:8080/swagger-ui.html
 </td>
 </tr>
 <tr>
-<td> Просмотр склада </td>
-<td> GET </td>
-<td> /api/warehouse </td>
+<td> Удаление данных склада </td>
+<td> DELETE </td>
+<td> /api/warehouse/{id} </td>
 <td>
-Может принимать название склада и вернуть все подходящие значения, в случае отсутствия названия склада вернет все склады.
+</td>
+</tr>
+<tr>
+<td> Просмотр данных склада </td>
+<td> GET </td>
+<td> /api/warehouse/{id} </td>
+<td>
 </td>
 </tr>
 <tr>
@@ -169,21 +157,15 @@ http://localhost:8080/swagger-ui.html
 </td>
 </tr>
 <tr>
-<td> Изменение данных о товаре </td>
+<td> Изменение данных товара </td>
 <td> PUT </td>
-<td> /api/product </td>
+<td> /api/product/{id} </td>
 <td>
 
 ```json
 {
   "nameWarehouse": "Склад 1",
   "productDTO": {
-    "article": "7A1FCTG44",
-    "name": "Холодильник",
-    "priceLastPurchase": "50000",
-    "priceLastSale": "50000"
-  },
-  "newProductDTO": {
     "article": "7A1FCTG44",
     "name": "Холодильник",
     "priceLastPurchase": "100000",
@@ -196,45 +178,30 @@ http://localhost:8080/swagger-ui.html
 <tr>
 <td> Удаление товара </td>
 <td> DELETE </td>
-<td> /api/product </td>
+<td> /api/product/{id} </td>
 <td>
-
-```json
-{
-  "nameWarehouse": "Склад 1",
-  "productDTO": {
-    "article": "7A1FCTG44",
-    "name": "Холодильник",
-    "priceLastPurchase": "100000",
-    "priceLastSale": "100000"
-  }
-}
-```
 </td>
 </tr>
 <tr>
 <td> Просмотр товара </td>
 <td> GET </td>
-<td> /api/product </td>
+<td> /api/product/{id} </td>
 <td>
-Может принимать название товара и вернуть все подходящие значения, в случае отсутствия названия товара вернет все товары.
 </td>
 </tr>
 <tr>
 <td rowspan="2"> Отчеты </td>
 <td> Общий список товаров </td>
 <td> GET </td>
-<td> /api/report/generalListProducts </td>
+<td> /api/report/generalListProducts/{nameProduct} </td>
 <td>
-Может принимать название товара
 </td>
 </tr>
 <tr>
 <td> Остатки товаров на складе </td>
 <td> GET </td>
-<td> /api/report/remnantsGoodsInWarehouses </td>
+<td> /api/report/remnantsGoodsInWarehouses/{nameWarehouse} </td>
 <td>
-Может принимать название склада
 </td>
 </tr>
 
@@ -247,4 +214,5 @@ http://localhost:8080/swagger-ui.html
 | _200_        | OK          | Команда успешно выполнена.                                                                                                                        |
 | _400_        | Bad Request | Пользователь допустил ошибку в отправленном документе: не ввел данные или заполнил их пустым значением. В овете будет возвращено описание ошибки. |
 | _404_        | Not Found   | Пользователем введен запрос на работу с данными, которые отсутствуют в базе данных. В овете будет возвращено описание ошибки.                     |
+| _500_        | Internal Server Error   | Произошла ошибка на стороне сервера. В овете будет возвращено описание ошибки.                                                                    |
 

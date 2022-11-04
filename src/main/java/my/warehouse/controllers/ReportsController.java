@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -28,12 +29,12 @@ public class ReportsController {
     }
 
     @Operation(summary = "Общий список товаров")
-    @GetMapping(path = "/generalListProducts", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity generalListProducts(@RequestBody(required = false) String nameProduct) {
+    @GetMapping({"/generalListProducts/{nameProduct}", "/generalListProducts"})
+    public ResponseEntity generalListProducts(@PathVariable(required = false) Optional<String> nameProduct) {
         try {
             List<ProductDTO> productDTO;
-            if (nameProduct == null) productDTO = reportsService.generalListProducts();
-            else productDTO= reportsService.generalListProducts(nameProduct);
+            if (nameProduct.isPresent())  productDTO = reportsService.generalListProducts(nameProduct.get());
+            else productDTO= reportsService.generalListProducts();
 
             return ResponseEntity.ok().body(productDTO);
         } catch (DataNotFoundException dataNotFoundException) {
@@ -42,12 +43,12 @@ public class ReportsController {
     }
 
     @Operation(summary = "Остатки товаров на складах")
-    @GetMapping(path = "/remnantsGoodsInWarehouses", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity remnantsGoodsInWarehouses(@RequestBody(required = false) String nameWarehouses) {
+    @GetMapping({"/remnantsGoodsInWarehouses/{nameWarehouses}", "/remnantsGoodsInWarehouses"})
+    public ResponseEntity remnantsGoodsInWarehouses(@PathVariable(required = false) Optional<String> nameWarehouses) {
         try {
             List<ReportsDTO> reportsDTO;
-            if (nameWarehouses == null) reportsDTO = reportsService.remnantsGoodsInWarehouses();
-            else reportsDTO= reportsService.remnantsGoodsInWarehouses(nameWarehouses);
+            if (nameWarehouses.isPresent()) reportsDTO = reportsService.remnantsGoodsInWarehouses(nameWarehouses.get());
+            else reportsDTO= reportsService.remnantsGoodsInWarehouses();
 
             return ResponseEntity.ok().body(reportsDTO);
         } catch (DataNotFoundException dataNotFoundException) {
