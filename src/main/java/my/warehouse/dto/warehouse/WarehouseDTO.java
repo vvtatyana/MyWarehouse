@@ -1,9 +1,11 @@
-package my.warehouse.dto;
+package my.warehouse.dto.warehouse;
+
+import my.warehouse.models.Warehouse;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class WarehouseDTO implements IDTO {
+public class WarehouseDTO {
     @NotNull(message = "Название склада должно быть задано")
     @NotEmpty(message = "Название склада должно быть не пустым")
     private String name;
@@ -13,6 +15,10 @@ public class WarehouseDTO implements IDTO {
 
     public WarehouseDTO(String name) {
         this.name = name;
+    }
+
+    public WarehouseDTO(Warehouse warehouse) {
+        this.name = warehouse.getName();
     }
 
     public String getName() {

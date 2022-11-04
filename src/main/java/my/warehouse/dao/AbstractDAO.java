@@ -3,6 +3,8 @@ package my.warehouse.dao;
 import my.warehouse.exceptions.DataNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,25 +33,28 @@ public class AbstractDAO<T extends Serializable> {
         }
     }
 
+    public List<T> select(String name)  {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from " + clazz.getName() + " where name =: value", clazz)
+                    .setParameter("value", name)
+                    .getResultList();
+    }
+
+    @Transactional
     public long insert(T value) {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        long id = (long) session.save(value);
-        session.getTransaction().commit();
-        return id;
+        return (long) session.save(value);
     }
 
+    @Transactional
     public void update(long id, T newValue) throws DataNotFoundException {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
         session.update(newValue);
-        session.getTransaction().commit();
     }
 
+    @Transactional
     public void delete(long id) throws DataNotFoundException {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
         session.remove(select(id));
-        session.getTransaction().commit();
     }
 }

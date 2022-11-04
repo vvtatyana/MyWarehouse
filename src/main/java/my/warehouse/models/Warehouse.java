@@ -1,5 +1,7 @@
 package my.warehouse.models;
 
+import my.warehouse.dto.warehouse.WarehouseDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -23,6 +25,10 @@ public class Warehouse implements Serializable {
 
     public Warehouse(String name) {
         this.name = name;
+    }
+
+    public Warehouse(WarehouseDTO warehouseDTO) {
+        this.name = warehouseDTO.getName();
     }
 
     public long getId() {

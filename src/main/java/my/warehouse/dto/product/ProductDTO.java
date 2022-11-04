@@ -1,13 +1,14 @@
-package my.warehouse.dto;
+package my.warehouse.dto.product;
+
+import my.warehouse.models.Product;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class ProductDTO implements IDTO {
+public class ProductDTO {
     @NotNull(message = "Артикул должен быть заполнено")
     @NotEmpty(message = "Артикул должен быть не пустой")
     private String article;
-
 
     @NotNull(message = "Название товара должно быть заполнено")
     @NotEmpty(message = "Название товара должно быть не пустым")
@@ -29,6 +30,13 @@ public class ProductDTO implements IDTO {
         this.name = name;
         this.priceLastPurchase = priceLastPurchase;
         this.priceLastSale = priceLastSale;
+    }
+
+    public ProductDTO(Product product) {
+        this.article = product.getArticle();
+        this.name = product.getName();
+        this.priceLastPurchase = product.getPriceLastPurchase();
+        this.priceLastSale = product.getPriceLastSale();
     }
 
     public String getArticle() {
@@ -65,6 +73,9 @@ public class ProductDTO implements IDTO {
 
     @Override
     public String toString() {
-        return "article : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
+        return "article : " + article
+                + "\nname : " + name
+                + "\npriceLastPurchase : " + priceLastPurchase
+                + "\npriceLastSale : " + priceLastSale;
     }
 }

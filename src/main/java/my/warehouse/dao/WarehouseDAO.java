@@ -1,7 +1,9 @@
 package my.warehouse.dao;
 
-import my.warehouse.dto.WarehouseDTO;
+import liquibase.pro.packaged.W;
+import my.warehouse.dto.warehouse.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
+import my.warehouse.models.Product;
 import my.warehouse.models.Warehouse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,5 +27,17 @@ public class WarehouseDAO extends AbstractDAO<Warehouse> {
         if (result.isEmpty())
             throw new DataNotFoundException("There is no warehouse data with data in the database :\n" + warehouse);
         return result.get(0);
+    }
+
+    public void update(long id, WarehouseDTO newWarehouse) throws DataNotFoundException {
+        Warehouse warehouse = select(id);
+        warehouse.setName(newWarehouse.getName());
+        super.update(id, warehouse);
+    }
+
+    public long insert(Warehouse value) {
+        List<Warehouse> warehouses = select(value.getName());
+        if (warehouses.isEmpty()) return super.insert(value);
+        else return warehouses.get(0).getId();
     }
 }

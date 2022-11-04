@@ -1,5 +1,7 @@
 package my.warehouse.models;
 
+import my.warehouse.dto.product.ProductDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -45,6 +47,14 @@ public class Product implements Serializable {
         this.name = name;
         this.priceLastPurchase = priceLastPurchase;
         this.priceLastSale = priceLastSale;
+    }
+
+    public Product(long idWarehouse, ProductDTO productDTO) {
+        this.idWarehouse = idWarehouse;
+        this.article = productDTO.getArticle();
+        this.name = productDTO.getName();
+        this.priceLastPurchase = productDTO.getPriceLastPurchase();
+        this.priceLastSale = productDTO.getPriceLastSale();
     }
 
     public long getId() {
@@ -97,6 +107,10 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "warehouse : " + idWarehouse + "\narticle : " + article + "\nname : " + name + "\npriceLastPurchase : " + priceLastPurchase + "\npriceLastSale : " + priceLastSale;
+        return "warehouse : " + idWarehouse +
+                "\narticle : " + article +
+                "\nname : " + name +
+                "\npriceLastPurchase : " + priceLastPurchase +
+                "\npriceLastSale : " + priceLastSale;
     }
 }
