@@ -29,8 +29,8 @@ public class ReportsController {
     }
 
     @Operation(summary = "Общий список товаров")
-    @GetMapping({"/generalListProducts/{nameProduct}", "/generalListProducts"})
-    public ResponseEntity generalListProducts(@PathVariable(required = false) Optional<String> nameProduct) {
+    @GetMapping( "/generalListProducts")
+    public ResponseEntity generalListProducts(@RequestParam(required = false) Optional<String> nameProduct) {
         try {
             List<ProductDTO> productDTO;
             if (nameProduct.isPresent())  productDTO = reportsService.generalListProducts(nameProduct.get());
@@ -43,8 +43,8 @@ public class ReportsController {
     }
 
     @Operation(summary = "Остатки товаров на складах")
-    @GetMapping({"/remnantsGoodsInWarehouses/{nameWarehouses}", "/remnantsGoodsInWarehouses"})
-    public ResponseEntity remnantsGoodsInWarehouses(@PathVariable(required = false) Optional<String> nameWarehouses) {
+    @GetMapping("/remnantsGoodsInWarehouses")
+    public ResponseEntity remnantsGoodsInWarehouses(@RequestParam(required = false) Optional<String> nameWarehouses) {
         try {
             List<ReportsDTO> reportsDTO;
             if (nameWarehouses.isPresent()) reportsDTO = reportsService.remnantsGoodsInWarehouses(nameWarehouses.get());

@@ -193,15 +193,17 @@ http://localhost:8080/swagger-ui.html
 <td rowspan="2"> Отчеты </td>
 <td> Общий список товаров </td>
 <td> GET </td>
-<td> /api/report/generalListProducts/{nameProduct} </td>
+<td> /api/report/generalListProducts </td>
 <td>
+Возвращает список всех товаров со всех складов. В качестве параметра можно передать название склада, для которого вернется список всех товаров.
 </td>
 </tr>
 <tr>
 <td> Остатки товаров на складе </td>
 <td> GET </td>
-<td> /api/report/remnantsGoodsInWarehouses/{nameWarehouse} </td>
+<td> /api/report/remnantsGoodsInWarehouses </td>
 <td>
+Возвращает количество каждого товара на всех складах. В качестве параметра можно передать название товара, для которого вернется его количество на всех складах.
 </td>
 </tr>
 
