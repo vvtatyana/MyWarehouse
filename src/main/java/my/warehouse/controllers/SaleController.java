@@ -1,8 +1,8 @@
 package my.warehouse.controllers;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import my.warehouse.dto.SaleDTO;
-import my.warehouse.dto.validate.Validate;
+import my.warehouse.dto.documents.SaleDTO;
 import my.warehouse.exceptions.DataNotFoundException;
 import my.warehouse.serviсe.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -21,24 +20,18 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class SaleController {
 
     private final SaleService saleService;
-    private final Validate validate;
 
     @Autowired
-    public SaleController(SaleService saleService, Validate validate) {
+    public SaleController(SaleService saleService) {
         this.saleService = saleService;
-        this.validate = validate;
     }
 
     @Operation(summary = "Продажа товара", description = "Происходит продажа товара")
-    @PutMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity sale(@RequestBody SaleDTO saleDTO) {
-        List<String> error = validate.validate(saleDTO);
-        if (!error.isEmpty())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.stream().map(Object::toString).collect(Collectors.joining("\n")));
-
+    @DeleteMapping(produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity sale(@RequestBody @Valid SaleDTO saleDTO) {
         try {
             saleService.sale(saleDTO);
-            return ResponseEntity.ok(saleService.products(saleDTO.getWarehouse()));
+            return ResponseEntity.ok().body("Товар успешно продан");
         } catch (DataNotFoundException dataNotFoundException) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dataNotFoundException.getMessage());
         }

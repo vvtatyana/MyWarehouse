@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -17,59 +18,34 @@ public class MovingControllerTest {
 
     @Test
     public void testReturn200() throws Exception {
-        String json = getJSON("Холодильник");
+        String json = TestUntil.getJSONMoving("Холодильник");
+        mvc.perform(post("/api/admission")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUntil.getJSONAdmission("Склад 1")))
+                .andExpect(status().isOk());
 
-        mvc.perform(
-                        put("/api/moving")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(json)
-                )
+        mvc.perform(put("/api/moving")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isOk());
 
     }
 
     @Test
     public void testReturn404() throws Exception {
-        String json = getJSON("Утюг");
-
-        mvc.perform(
-                        put("/api/moving")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(json)
-                )
+        String json = TestUntil.getJSONMoving("Утюг");
+        mvc.perform(put("/api/moving")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().is4xxClientError());
-
     }
 
     @Test
     public void testReturn400() throws Exception {
-        String json = getJSON("");
-        mvc.perform(
-                        put("/api/moving")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(json)
-                )
+        String json = TestUntil.getJSONMoving("");
+        mvc.perform(put("/api/moving")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().is4xxClientError());
-
-    }
-
-    private String getJSON(String nameProduct){
-        return "\t{\n" +
-                "  \"number\": \"1\",\n" +
-                "  \"warehouseOne\": {\n" +
-                "    \"name\": \"Склад 1\"\n" +
-                "  },\n" +
-                "  \"warehouseTwo\": {\n" +
-                "    \"name\": \"Склад 2\"\n" +
-                "  },\n" +
-                "  \"products\": [\n" +
-                "  {\n" +
-                "    \"article\": \"7A1FCTG44\",\n" +
-                "    \"name\": \"" + nameProduct + "\",\n" +
-                "    \"priceLastPurchase\": \"50000\",\n" +
-                "    \"priceLastSale\": \"50000\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}";
     }
 }
