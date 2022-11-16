@@ -1,5 +1,10 @@
 package my.warehouse.dto.documents;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ReportsDTO {
     private String article;
     private String name;
@@ -11,30 +16,6 @@ public class ReportsDTO {
     public ReportsDTO(String article, String name, int remains) {
         this.article = article;
         this.name = name;
-        this.remains = remains;
-    }
-
-    public String getArticle() {
-        return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getRemains() {
-        return remains;
-    }
-
-    public void setRemains(int remains) {
         this.remains = remains;
     }
 

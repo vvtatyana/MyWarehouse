@@ -1,5 +1,7 @@
 package my.warehouse.dto.documents;
 
+import lombok.Getter;
+import lombok.Setter;
 import my.warehouse.dto.product.ProductDTO;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 
@@ -9,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 public class MovingDTO{
 
     @NotNull(message = "Номер документа должен быть заполнен")
@@ -35,38 +39,6 @@ public class MovingDTO{
         this.number = number;
         this.warehouseOne = warehouseOne;
         this.warehouseTwo = warehouseTwo;
-        this.products = products;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public WarehouseDTO getWarehouseOne() {
-        return warehouseOne;
-    }
-
-    public void setWarehouseOne(WarehouseDTO warehouseOne) {
-        this.warehouseOne = warehouseOne;
-    }
-
-    public WarehouseDTO getWarehouseTwo() {
-        return warehouseTwo;
-    }
-
-    public void setWarehouseTwo(WarehouseDTO warehouseTwo) {
-        this.warehouseTwo = warehouseTwo;
-    }
-
-    public List<ProductDTO> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductDTO> products) {
         this.products = products;
     }
 

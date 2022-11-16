@@ -1,5 +1,7 @@
 package my.warehouse.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "warehouse")
+@Getter
+@Setter
 public class Warehouse implements Serializable {
     @Id
     @Column(name = "id")
@@ -29,22 +33,6 @@ public class Warehouse implements Serializable {
 
     public Warehouse(WarehouseDTO warehouseDTO) {
         this.name = warehouseDTO.getName();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

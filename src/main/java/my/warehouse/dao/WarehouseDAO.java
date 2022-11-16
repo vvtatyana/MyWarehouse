@@ -1,9 +1,7 @@
 package my.warehouse.dao;
 
-import liquibase.pro.packaged.W;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
-import my.warehouse.models.Product;
 import my.warehouse.models.Warehouse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

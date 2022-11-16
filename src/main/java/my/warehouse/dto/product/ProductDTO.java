@@ -1,10 +1,14 @@
 package my.warehouse.dto.product;
 
+import lombok.Getter;
+import lombok.Setter;
 import my.warehouse.models.Product;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 public class ProductDTO {
     @NotNull(message = "Артикул должен быть заполнено")
     @NotEmpty(message = "Артикул должен быть не пустой")
@@ -37,38 +41,6 @@ public class ProductDTO {
         this.name = product.getName();
         this.priceLastPurchase = product.getPriceLastPurchase();
         this.priceLastSale = product.getPriceLastSale();
-    }
-
-    public String getArticle() {
-        return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPriceLastPurchase() {
-        return priceLastPurchase;
-    }
-
-    public void setPriceLastPurchase(String priceLastPurchase) {
-        this.priceLastPurchase = priceLastPurchase;
-    }
-
-    public String getPriceLastSale() {
-        return priceLastSale;
-    }
-
-    public void setPriceLastSale(String priceLastSale) {
-        this.priceLastSale = priceLastSale;
     }
 
     @Override

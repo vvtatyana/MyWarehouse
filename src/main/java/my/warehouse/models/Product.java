@@ -1,5 +1,7 @@
 package my.warehouse.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import my.warehouse.dto.product.ProductDTO;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "product")
+@Getter
+@Setter
 public class Product implements Serializable {
     @Id
     @Column(name = "id")
@@ -55,54 +59,6 @@ public class Product implements Serializable {
         this.name = productDTO.getName();
         this.priceLastPurchase = productDTO.getPriceLastPurchase();
         this.priceLastSale = productDTO.getPriceLastSale();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getIdWarehouse() {
-        return idWarehouse;
-    }
-
-    public void setIdWarehouse(long idWarehouse) {
-        this.idWarehouse = idWarehouse;
-    }
-
-    public String getArticle() {
-        return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPriceLastPurchase() {
-        return priceLastPurchase;
-    }
-
-    public void setPriceLastPurchase(String priceLastPurchase) {
-        this.priceLastPurchase = priceLastPurchase;
-    }
-
-    public String getPriceLastSale() {
-        return priceLastSale;
-    }
-
-    public void setPriceLastSale(String priceLastSale) {
-        this.priceLastSale = priceLastSale;
     }
 
     @Override

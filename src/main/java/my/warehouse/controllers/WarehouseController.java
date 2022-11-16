@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import my.warehouse.dto.warehouse.WarehouseDTO;
 import my.warehouse.exceptions.DataNotFoundException;
-import my.warehouse.models.Product;
 import my.warehouse.models.Warehouse;
 import my.warehouse.serviсe.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;

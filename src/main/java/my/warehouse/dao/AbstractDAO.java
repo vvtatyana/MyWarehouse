@@ -3,7 +3,6 @@ package my.warehouse.dao;
 import my.warehouse.exceptions.DataNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
